@@ -1,0 +1,29 @@
+
+<html>
+<body>
+<h1>HTML DOM Events</h1>
+<h2>The onclick Event</h2>
+
+<p>The onclick event triggers a function when an element is clicked on.</p>
+<p>Click to trigger a function that will output "Hello World":</p>
+
+<button onclick="myFunction()">Click me</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  
+            var context = new (window.AudioContext || window.webkitAudioContext)();
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type = 'sine'; // this is the default - also square, sawtooth, triangle
+osc.frequency.value = 440; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + 2); // stop 2 seconds after the current 
+  document.getElementById("demo").innerHTML = "Hello World";
+}
+</script>
+
+</body>
+</html>

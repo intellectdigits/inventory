@@ -1,0 +1,213 @@
+<script>
+    function solution(N){
+        bin=((N)>>>0).toString(2).split("");
+        console.log(bin);
+        var firstone=false;
+        var firstzero=false;
+        var secondone="false"
+        var count=0;
+        for(var i=0; i<bin.length;i++){
+if(bin[i]=="1"&&firstone==false&&firstzero==false){
+alert("one");
+firstone=true; firstzero=true;
+}
+if(bin[i]=="0"&&firstone==true&&firstzero==true){
+    count=count+1;
+alert("zero");
+firstone=true;firstzero=true; secondone=true;
+}
+if(bin[i]=="1"&&firstone==true&&secondone==true){
+alert(count);
+
+var firstone=false;
+         firstzero=false;
+       
+       
+}
+
+        }
+
+    }
+    function shift(arr,x){
+       const newarr=[];
+      
+      const b =arr.length-1;
+      console.log(arr);
+      for(var c=0;c<arr.length;c++){
+
+arr.unshift((arr[b]).toString())
+arr.pop();
+console.log(arr);
+if(c>=x){
+alert("reached");
+arr.length=0;
+}
+      }  
+      console.log(arr);
+    }
+shift(["0","1","2","3","4","7","9","4"],2);
+function pair(N){
+    /* duplicat the input array */
+    var c=0;
+    var result=[];
+  const duplicate= N.filter(function(item, pos) {
+return N.indexOf(item) == pos;
+}) ;
+  console.log(duplicate)
+  for(var i=0; i<duplicate.length;i++){
+    for(var p=0;p<N.length;p++){
+if(duplicate[i]==N[p]){
+ 
+}
+else{
+    
+    c=c+1; 
+    result.push(duplicate[i]+""+N[p]);
+   
+
+}
+    }
+  }
+  console.log(result.filter(function(item, pos) {
+return result.indexOf(item) == pos;
+}));
+  console.log( result.filter(function(item, pos) {
+return result.indexOf(item) == pos;
+}).length)
+}
+function missing(N){
+var check=[];
+var min=Math.min.apply(null, N);
+var i=0;
+for(var m=0;m<N.length;m++){
+  
+check.push(min+i);
+i=i+1;
+
+}
+if(N.toString()==check.toString()){
+  console.log("permutation")
+}else{
+  console.log("not a permutation");
+}
+console.log(N);
+console.log(check);
+}
+
+  function counters(N,A){
+  var counter=[];
+  if(counter.length<1){
+    for(var i=0;i<N;i++){
+      counter[i]=0;
+    }
+    console.log(counter)
+  }
+  for(var c=0; c<A.length;c++){
+    if(A[c]<counter.length&&A[c]>1&&A[c]<N){
+      counter[A[c]]= counter[A[c]]+1
+      console.log("asa");
+    }
+  else{if(A[c]=N+1){
+  for(var p=0;p<counter.length;p++){
+    counter[p]=Math.max.apply(null, counter)
+  }
+    }}  
+    console.log(counter)
+  }
+  }
+  function search(A){
+    // sort A in ascending order
+    var b=A.sort();
+    console.log(b);
+    const unique= b.filter(function(item, pos) {
+return b.indexOf(item) == pos;
+}) ;
+console.log(unique);
+    //get the minimum value of A
+    var min=Math.min.apply(null, A);
+    var empty=[];
+    //loop start to minimum value and through the entire array
+    for(var i=min;i<unique.length+unique.length;i++){
+     empty.push(i);
+    }
+    console.log(empty.filter(function(item, pos) {
+return empty.indexOf(item) == pos;
+}));
+for(var x=0;x<unique.length;x++){
+  if(empty[x]!=unique[x]&&empty[x]!=undefined&&unique[x]!=undefined){
+    console.log(empty[x],unique[x])
+ break;
+  }
+  else{
+   
+  }
+  
+}
+console.log(empty[x]);
+    //check if loop value is present in array
+
+  }
+  console.log(search(["1","2","3","4"]));
+  function cars(N){
+    //duplicate N;
+   var M=N;
+   var sum=0;
+  
+   for(var x=0;x<M.length;x++){
+    
+    for(var y=0;y<N.length;y++){
+    if(M[x]!=N[y]){
+      console.log(N[y],x);
+    }
+    }
+   }
+
+  }
+  function factor(A,B,K){
+    //loop from A to B
+    //check divisibility
+  }
+ 
+  cars(["0","1","0","1","1"])
+calpoints=function(ops){
+var result =[];
+
+for(var i=0;i<ops.length;i++){
+  console.log(ops);
+  if(ops[i]=="5"){
+    console.log(i);
+    result.push("5");
+
+  }
+  if(ops[i]=="2"){
+    result.push("2");
+    
+  }
+  if(ops[i]=="C"){
+    result.pop();
+    
+  }
+  if(ops[i]=="D"){
+    result.push(2*parseInt(result[i-3]));
+    console.log(result);
+    
+  }
+  if(ops[i]=="+"){
+    sum=0;
+   for(var x=0;x<result.length;x++){
+    sum=sum+parseInt(result[x]);
+   }
+   result.push(sum);
+   console.log(result);
+    
+  }
+}
+return result;
+};
+
+var ops="52CD++"
+console.log(calpoints(ops));
+function solution{
+  
+}
+</script>
