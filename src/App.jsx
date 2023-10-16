@@ -20,7 +20,7 @@ import Admin from './pages/Admin';
 
 import { useState } from "react";
 import { MyContext } from '../src/MyContext.jsx';
-import Modifystaff from './pages/modifystatff';
+
 import Stock from './pages/Stock';
 
 
