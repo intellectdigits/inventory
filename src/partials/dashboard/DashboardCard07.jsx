@@ -44,7 +44,7 @@ function fetchstock(){
 
     $.ajax({
       type: "POST",
-      url: "https://stockapi-8hb4.onrender.com/api/stocks",
+      url: "http://victorapps.great-site.net/datasource/stocks.php",
       data:"",
       success(data) {
       
