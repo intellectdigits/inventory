@@ -43,17 +43,18 @@ function closeModal() {
 function fetchstock(){
 
     $.ajax({
-      type: "POST",
-      url: "http://victorapps.great-site.net/datasource/stocks.php",
+      type: "GET",
+      url: "https://stockapi-8hb4.onrender.com/api/stocks",
       data:"",
       success(data) {
-      
+      alert(data);
         const arrs=JSON.stringify(data);
         const arr=JSON.parse(arrs);
         setStocks(arr);
-     
+        alert("cdx")
                         
       },
+     
   });
   }
 
