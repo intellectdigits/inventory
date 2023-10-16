@@ -44,7 +44,7 @@ function fetchstock(){
 
     $.ajax({
       type: "POST",
-      url: "http://localhost/stocks.php",
+      url: "https://stockapi-8hb4.onrender.com/api/stocks",
       data:"",
       success(data) {
       
