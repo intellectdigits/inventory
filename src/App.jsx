@@ -44,7 +44,7 @@ function App() {
         <Route exact path="/sales" element={<SalesRecord />} />
         <Route exact path="/users" element={<Users />} />
         <Route exact path="/admin" element={<Admin />} />
-        <Route exact path="/modifystaff/:id" element={<Modifystaff />} />
+       
         <Route exact path="/stock/:id" element={<Stock/>} />
       </Routes>
       </MyContext.Provider>
