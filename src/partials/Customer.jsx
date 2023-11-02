@@ -132,7 +132,7 @@ $("#tip"+$("#sref").text()).append(`<div id="tipresult">${tip.item}</div>`)
     if($("#item"+a).val()!=null){
                       $.ajax({
                           type: "POST",
-                          url: "http://localhost:5001/api/pos",
+                          url: "https://stockapi-8hb4.onrender.com/api/pos",
                           data: JSON.stringify({
                 'item':$("#item"+a).val(),
                 'amount':$("#amount"+a).val(),
@@ -178,7 +178,7 @@ $("#tip"+$("#sref").text()).append(`<div id="tipresult">${tip.item}</div>`)
     e.preventDefault();
     $.ajax({
       type: "POST",
-      url: "http://localhost:5001/addCustomer",
+      url: "https://stockapi-8hb4.onrender.com/addCustomer",
       data:JSON.stringify({ 'name': $("#client"+$("#sref").text()).val(),
       'phone': $("#phone"+$("#sref").text()).val(),'email': $("#email"+$("#sref").text()).val(),'country': $("#country"+$("#sref").text()).val()}),
       success: function (response) {
