@@ -41,7 +41,7 @@ setLoading(true);
      
 
 $("tbody").append(`<tr><td>${value["username"]}</td><td>${value["password"]}</td><td>Inventory Menu: <input name="stocks" type="checkbox"${value["username"]}  /> </td>
-<td><a href="/modifystaff/:${value["id"]}"/><img width="15%" src="../src/images/delete.jpg"/></a><br>
+<td><button  class="btn-primary"><a href="/modifystaff/:${value["id"]}"/><img width="15%" src="../src/images/delete.jpg"/></a></button><br>
 
 </td></tr>`);
       });
