@@ -45,7 +45,7 @@ function fetchstock(){
 
     $.ajax({
       type: "GET",
-      url: "http://localhost:5001/users/user/"+id.substring(1),
+      url: "https://stockapi-8hb4.onrender.com/users/user/"+id.substring(1),
       success(data) {
         $.each(data, function (key, value) { 
     $("#user").val(value["username"]);$("#pass").val(value["password"]);$("#wage").val(value["wage"]);$("#due").val(value["payment_date"]);
@@ -65,7 +65,7 @@ const handlesubmit = (e) => {
 
    $.ajax({
     type: 'DELETE',
-    url: "http://localhost:5001/users/user/"+id.substring(1),
+    url: "https://stockapi-8hb4.onrender.com/users/user/"+id.substring(1),
     contentType: "application/json; charset=utf-8",
     traditional: true,
        success(data) {
