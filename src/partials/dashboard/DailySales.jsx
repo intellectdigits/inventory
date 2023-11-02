@@ -66,7 +66,7 @@ const filterbyuser=()=>{
     url: "https://stockapi-8hb4.onrender.com/filtersales",
     data:JSON.stringify({username:$("#client").val()}),
     success(data) {
-      alert(data)
+     
       
       const arr=JSON.parse(data);
       setStocks(arr);
@@ -88,7 +88,7 @@ const filterbycustomer=()=>{
     url: "https://stockapi-8hb4.onrender.com/filterBycustomer",
     data:JSON.stringify({client:$("#customer").val()}),
     success(data) {
-      alert(data)
+     
       
       const arr=JSON.parse(data);
       setStocks(arr);
