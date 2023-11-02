@@ -46,7 +46,7 @@ function fetchstock(){
 
     $.ajax({
       type: "GET",
-      url: "http://localhost:5001/api/stocks",
+      url: "https://stockapi-8hb4.onrender.com/api/stocks",
       data:"",
       success(data) {
    
@@ -93,7 +93,7 @@ const handlesubmit = (e) => {
   
    $.ajax({
     type: 'POST',
-    url: 'http://localhost:5001/api/stocks',
+    url: 'https://stockapi-8hb4.onrender.com/api/stocks',
     data: JSON.stringify(SendInfo),
     contentType: "application/json; charset=utf-8",
     traditional: true,
