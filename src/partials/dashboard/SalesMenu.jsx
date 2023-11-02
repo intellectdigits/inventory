@@ -58,7 +58,7 @@ const addrow=()=>{
   <td class="rows" ><input " type="text" id="qty${i}"   placeholder="Enter Quantity" name="qty"></td>
             
             <td class="rows" ><input type="number" class="row" id="amount${i}"  placeholder="Amount" disabled></td>
-            <td class="rows" ><button class="row" type="button"  class="btn-primary" name="submit" id="remove"><img  height="5px" src="../src/images/del.jpg"/></button></td>
+            <td class="rows" ><button class="row" type="button"  class="btn-danger" name="submit" id="remove">Remove</button></td>
             
           </tr>`);
           i=i+1;
