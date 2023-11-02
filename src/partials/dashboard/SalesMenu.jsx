@@ -129,7 +129,7 @@ $("#tip"+$("#sref").text()).append(`<div id="tipresult">${tip.item}</div>`)
     if($("#item"+a).val()!=null){
                       $.ajax({
                           type: "POST",
-                          url: "http://localhost:5001/api/pos",
+                          url: "https://stockapi-8hb4.onrender.com/api/pos",
                           data: JSON.stringify({
                 'item':$("#item"+a).val(),
                 'amount':$("#amount"+a).val(),
