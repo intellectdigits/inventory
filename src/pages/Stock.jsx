@@ -48,7 +48,7 @@ function fetchstock(){
 
     $.ajax({
       type: "GET",
-      url: "http://localhost:5001/api/stocks/"+id.substring(1),
+      url: "https://stockapi-8hb4.onrender.com/api/stocks/"+id.substring(1),
       success(data) {
         alert("edsd")
         $.each(data, function (key, value) { 
@@ -70,7 +70,7 @@ const handlesubmit = (e) => {
    
    $.ajax({
        type: "DELETE",
-       url: "http://localhost:5001/api/stocks/"+id.substring(1),
+       url: "https://stockapi-8hb4.onrender.com/api/stocks/"+id.substring(1),
        success(data) {
      history("/")
      
@@ -88,7 +88,7 @@ const handlesubmit = (e) => {
  
   $.ajax({
    type: 'PUT',
-   url: "http://localhost:5001/api/stocks/"+id.substring(1),
+   url: "https://stockapi-8hb4.onrender.com/api/stocks/"+id.substring(1),
    data: JSON.stringify(SendInfo),
    contentType: "application/json; charset=utf-8",
    traditional: true,
