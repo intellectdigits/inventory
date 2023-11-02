@@ -64,7 +64,7 @@ const handlesubmit = (e) => {
   var SendInfo={"username":user,"password":Password}
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:5001/login',
+    url: 'https://stockapi-8hb4.onrender.com/login',
     data: JSON.stringify(SendInfo),
     contentType: "application/json; charset=utf-8",
     traditional: true,
