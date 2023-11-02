@@ -41,7 +41,7 @@ function fetchstock(){
 
   $.ajax({
     type: "GET",
-    url: "http://localhost:5001/api/sales",
+    url: "https://stockapi-8hb4.onrender.com/api/sales",
     data:"",
     success(data) {
   
@@ -63,7 +63,7 @@ const filterbyuser=()=>{
  
   $.ajax({
     type: "POST",
-    url: "http://localhost:5001/filtersales",
+    url: "https://stockapi-8hb4.onrender.com/filtersales",
     data:JSON.stringify({username:$("#client").val()}),
     success(data) {
       alert(data)
@@ -85,7 +85,7 @@ const filterbycustomer=()=>{
  
   $.ajax({
     type: "POST",
-    url: "http://localhost:5001/filterBycustomer",
+    url: "https://stockapi-8hb4.onrender.com/filterBycustomer",
     data:JSON.stringify({client:$("#customer").val()}),
     success(data) {
       alert(data)
@@ -107,7 +107,7 @@ const filterByproduct=()=>{
  
   $.ajax({
     type: "POST",
-    url: "http://localhost:5001/filterByproduct",
+    url: "https://stockapi-8hb4.onrender.com/filterByproduct",
     data:JSON.stringify({item:$("#product").val()}),
     success(data) {
       alert(data)
