@@ -8,9 +8,11 @@ import Modal from 'react-modal';
 import DatePicker from "react-datepicker";
 import { Outlet, Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
+import { useContext } from 'react';
+import { MyContext } from '../../../src/MyContext';
 window.$ = $;
 function DashboardCard07() {
-
+  const { login, setLogin } = useContext(MyContext);
 const[stocks,setStocks]=useState([]);
 const[loading,setLoading]=useState(false);
 const customStyles = {
@@ -44,14 +46,14 @@ function fetchstock(){
 
     $.ajax({
       type: "GET",
-      url: "https://stockapi-8hb4.onrender.com/api/stocks",
+      url: "http://localhost:5001/api/stocks",
       data:"",
       success(data) {
-      alert(data);
+   
         const arrs=JSON.stringify(data);
         const arr=JSON.parse(arrs);
         setStocks(arr);
-        alert("cdx")
+       
                         
       },
      
@@ -64,12 +66,16 @@ function fetchstock(){
    
   }
   useEffect(() => {
+    localStorage.setItem("current", "")
     fetchstock();
+    if(login==""){history("/logins");
+   
+  }
   },[]);
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
-  const [wage, setWage] = useState("");
-  const [paydate, payDate] = useState("");
+  const [item, setItem] = useState("");
+  const [selling_price, setSelling_price] = useState(0);
+  const [cost_price, setCost_price] = useState(0);
+  const [qty, setQty] = useState(0);
   const [stock, setStock] = useState("uncheck");
   const [sales, setSales] = useState("checked");
   const [staff, setStaff] = useState("uncheck");
@@ -78,25 +84,32 @@ function fetchstock(){
     var link="stock/:";
 const[loadings,setLoadings]=useState(false);
 const history = useNavigate();
+const [startDate, setStartDate] = useState(new Date());
+var SendInfo={item:item,selling_price:parseInt(selling_price),cost_price:parseInt(cost_price),qty:parseInt(qty),expiring_date:startDate,alert_date:"22/11/2000"}
+
 const handlesubmit = (e) => {
    
    e.preventDefault();
-   const form = $(e.target);
+  
    $.ajax({
-       type: "POST",
-       url: form.attr("action"),
-       data: form.serialize(),
+    type: 'POST',
+    url: 'http://localhost:5001/api/stocks',
+    data: JSON.stringify(SendInfo),
+    contentType: "application/json; charset=utf-8",
+    traditional: true,
        success(data) {
-        fetchstock();
-        closeModal();
+       
+      
      
         },
        error: function(xhr, textStatus, errorThrown){
+        fetchstock();
+        closeModal();
          console.log('STATUS: '+textStatus+'\nERROR THROWN: '+errorThrown);
        }
    });
  };
- const [startDate, setStartDate] = useState(new Date());
+ 
   return (
     <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
         
@@ -108,16 +121,15 @@ const handlesubmit = (e) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form className="form-horizontal" action="http://localhost/insertstock.php"
-                method="post"
+      
+        <button onClick={closeModal}><h1>X</h1></button>
+       
+        <form className="form-horizontal" 
                 onSubmit={(event) => handlesubmit(event)}
                >
                 <div class="row">
                 <div class="col">
-                <h2 className="text-2xl font-bold " >Add User</h2><br></br>
+                <h2 className="text-2xl font-bold " >Add STOCK</h2><br></br>
   
                 <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900"></label>
@@ -125,22 +137,28 @@ const handlesubmit = (e) => {
                 </div>
                   </div>    
     <div>
-        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Item name</label>
+        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Item names</label>
         
         <div class="mt-2">
-          <input name="item" id="itemname"   type="text" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input name="item" id="itemname"  onChange={(e)=>setItem(e.target.value)} type="text" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
       <div>
         <label for="password" class="block text-sm font-medium leading-6 text-gray-900">cost price</label>
         <div class="mt-2">
-          <input id="cost" name="cost" autoComplete='false'   type="password" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input id="cost" name="cost" autoComplete='false' onChange={(e)=>setCost_price(e.target.value)}   type="number" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+        </div>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Quantity</label>
+        <div class="mt-2">
+          <input id="cost" name="cost" autoComplete='false' onChange={(e)=>setQty(e.target.value)}   type="number" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
       <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Selling price</label>
         <div class="mt-2">
-          <input name="sell"   type="number" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input name="sell"   type="number" autocomplete="email" onChange={(e)=>setSelling_price(e.target.value)} required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
       <div>
@@ -177,7 +195,7 @@ const handlesubmit = (e) => {
             <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
               <tr>
                 <th className="p-2">
-                  <div className="font-semibold text-left">Stock Description</div>
+                  <div className="font-semibold text-left">Stock Descriptions</div>
                 </th>
                 <th className="p-2">
                   <div className="font-semibold text-center">Unit Price</div>
@@ -219,6 +237,7 @@ const handlesubmit = (e) => {
                 <td className="p-2">
                 
                   <div className="text-center text-sky-500"><button  class="flex  justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" ><Link to={"stock/:"+row["id"]}>Modify</Link></button><br></br>
+                  
                   </div>
                 </td>
               </tr>)}

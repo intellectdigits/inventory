@@ -44,13 +44,13 @@ const[loadings,setLoadings]=useState(false);
 
 const history = useNavigate();
 function fetchstock(){
-  
+
 
     $.ajax({
-      type: "POST",
-      url: "http://localhost/item.php",
-      data:{userid:id.substring(1)},
+      type: "GET",
+      url: "http://localhost:5001/api/stocks/"+id.substring(1),
       success(data) {
+        alert("edsd")
         $.each(data, function (key, value) { 
 
     $("#item").val(value["item"]);$("#cost").val(value["cost_price"]);$("#sell").val(value["selling_price"]);$("#qty").val(value["qty"]);
@@ -67,11 +67,10 @@ function fetchstock(){
 const handlesubmit = (e) => {
    
    e.preventDefault();
-   const form = $(e.target);
+   
    $.ajax({
-       type: "POST",
-       url: form.attr("action"),
-       data: form.serialize(),
+       type: "DELETE",
+       url: "http://localhost:5001/api/stocks/"+id.substring(1),
        success(data) {
      history("/")
      
@@ -81,6 +80,28 @@ const handlesubmit = (e) => {
        }
    });
  };
+ 
+ const modifystock = (e) => {
+  const SendInfo={item:item.current.value,selling_price:parseInt(sell.current.value),cost_price:parseInt(cost.current.value),qty:parseInt(qty.current.value),expiring_date:"22/11/2000",alert_date:"22/11/2000"}
+
+  e.preventDefault();
+ 
+  $.ajax({
+   type: 'PUT',
+   url: "http://localhost:5001/api/stocks/"+id.substring(1),
+   data: JSON.stringify(SendInfo),
+   contentType: "application/json; charset=utf-8",
+   traditional: true,
+      success(data) {
+        alert(item.current.value)
+       history("/")
+   },
+      error: function(xhr, textStatus, errorThrown){
+        history("/")
+        console.log('STATUS: '+textStatus+'\nERROR THROWN: '+errorThrown);
+      }
+  });
+};
  const [startDate, setStartDate] = useState(new Date());
   return (
     <div className="flex h-screen overflow-hidden">
@@ -120,9 +141,8 @@ const handlesubmit = (e) => {
 
             {/* Cards */}
            <div className='row'>
-           <form className="form-horizontal" action="http://localhost/modifystock.php"
-                method="post"
-                onSubmit={(event) => handlesubmit(event)}
+           <form className="form-horizontal" 
+                onSubmit={(event) => modifystock(event)}
                >
                 <div class="row">
                 <div class="col">
@@ -140,21 +160,21 @@ const handlesubmit = (e) => {
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Item Name</label>
         
         <div class="mt-2">
-          <input id="item" name="item" ref={setItems} type="text" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input id="item" name="item"  ref={item} type="text" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
       <div hidden>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">UserName</label>
         
         <div class="mt-2">
-          <input  name="id" value={id}  type="text" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input  id="id" value={id}  type="text" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
 
       <div>
         <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Cost Price</label>
         <div class="mt-2">
-          <input id="cost" name="cost" autoComplete='false' ref={cost} type="password" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input id="cost" name="cost" autoComplete='false' ref={cost} type="number" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
       <div>
@@ -177,7 +197,7 @@ const handlesubmit = (e) => {
       <br></br>
       <div class="flex  justify-center">
        
-        <button type="submit" onClick={()=>{$("tbody").empty(); setTotal(0);}} class="flex  justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><h2 className="text-2xl font-bold " >Save</h2></button>
+        <button type="submit" class="flex  justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><h2 className="text-2xl font-bold " >Save</h2></button>
 <br></br>
          </div>
          
@@ -185,7 +205,7 @@ const handlesubmit = (e) => {
 
    </div>
 </form>
-<form action='http://localhost/delstock.php' method='post' onSubmit={handlesubmit}>
+<form  onSubmit={handlesubmit}>
 <div hidden>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">UserName</label>
         

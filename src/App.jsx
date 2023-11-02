@@ -22,9 +22,13 @@ import { useState } from "react";
 import { MyContext } from '../src/MyContext.jsx';
 
 import Stock from './pages/Stock';
+import Modifystaff from './pages/Modifystatff';
+import SalesReport from './pages/SalesReport';
+import CustomerPage from './pages/CustomerPage';
 
 
 function App() {
+ 
   const [login, setLogin] = useState("");
   const location = useLocation();
 
@@ -44,8 +48,11 @@ function App() {
         <Route exact path="/sales" element={<SalesRecord />} />
         <Route exact path="/users" element={<Users />} />
         <Route exact path="/admin" element={<Admin />} />
-       
+        <Route exact path="/modifystaff/:id" element={<Modifystaff />} />
+        
         <Route exact path="/stock/:id" element={<Stock/>} />
+        <Route exact path="/SalesReport" element={<SalesReport />} />
+        <Route exact path="/customer" element={<CustomerPage />} />
       </Routes>
       </MyContext.Provider>
     </>

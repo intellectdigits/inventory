@@ -1,15 +1,17 @@
 import React from 'react';
 import {useState} from "react";
 import {useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+
 import $ from 'jquery';
 import * as jqueryExports from "jquery";
 import DashboardCard06 from './DashboardCard06';
 import Datepicker from './Datepicker';
 import Datepicker2 from './Datepicker';
-
+import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import { MyContext } from '../../../src/MyContext';
 function AddUser() {
- // const navigate = useNavigate();
+  const history = useNavigate();
 const[stocks,setStocks]=useState([]);
 const[loading,setLoading]=useState(false);
 
@@ -24,14 +26,16 @@ const[loading,setLoading]=useState(false);
   const [reports, setReports] = useState("uncheck");
   const[items,setItems]=useState([]);
 const[loadings,setLoadings]=useState(false);
+const { login, setLogin } = useContext(MyContext);
 function fetchstock(){
-  
+
 setLoading(true);
   $.ajax({
-    type: "POST",
-    url: "http://localhost/fetchusers.php",
+    type: "GET",
+    url: "http://localhost:5001/api/users",
     data:"",
     success(response) {
+     
       $("tbody").empty();
       $.each(response, function (key, value) { 
      
@@ -39,14 +43,16 @@ setLoading(true);
 $("tbody").append(`<tr><td>${value["username"]}</td><td>${value["password"]}</td><td>Inventory Menu: <input name="stocks" type="checkbox"${value["username"]}  /> </td>
 <td><a href="/modifystaff/:${value["id"]}"/><img width="15%" src="../src/images/delete.jpg"/></a><br>
 
-<a href=""><img width="15%" src="../src/images/del.jpg"/></a></td></tr>`);
+</td></tr>`);
       });
 
     },
 });
 }
 useEffect(() => {
-  fetchstock();
+  localStorage.setItem("current", "admin")
+    fetchstock();
+    if(login==""){history("/logins");}
 },[]);
 
   var t=0;

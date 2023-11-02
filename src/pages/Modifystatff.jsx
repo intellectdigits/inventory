@@ -44,9 +44,8 @@ function fetchstock(){
   
 
     $.ajax({
-      type: "POST",
-      url: "http://localhost/staff.php",
-      data:{userid:id.substring(1)},
+      type: "GET",
+      url: "http://localhost:5001/users/user/"+id.substring(1),
       success(data) {
         $.each(data, function (key, value) { 
     $("#user").val(value["username"]);$("#pass").val(value["password"]);$("#wage").val(value["wage"]);$("#due").val(value["payment_date"]);
@@ -62,17 +61,19 @@ function fetchstock(){
   },[]);
 const handlesubmit = (e) => {
    
-  // e.preventDefault();
-   const form = $(e.target);
+   e.preventDefault();
+
    $.ajax({
-       type: "POST",
-       url: form.attr("action"),
-       data: form.serialize(),
+    type: 'DELETE',
+    url: "http://localhost:5001/users/user/"+id.substring(1),
+    contentType: "application/json; charset=utf-8",
+    traditional: true,
        success(data) {
-     
-     
-        },
+      
+        history("/admin")
+    },
        error: function(xhr, textStatus, errorThrown){
+         history("/")
          console.log('STATUS: '+textStatus+'\nERROR THROWN: '+errorThrown);
        }
    });
@@ -115,8 +116,7 @@ const handlesubmit = (e) => {
 
             {/* Cards */}
            <div className='row'>
-           <form className="form-horizontal" action="http://localhost/modifyuser.php"
-                method="post"
+           <form className="form-horizontal" 
                 onSubmit={(event) => handlesubmit(event)}
                >
                 <div class="row">
@@ -177,7 +177,7 @@ const handlesubmit = (e) => {
 
    </div>
 </form>
-<form action='http://localhost/delstaff.php' method='post' onSubmit={handlesubmit}>
+<form  onSubmit={handlesubmit}>
 <div hidden>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">UserName</label>
         
@@ -189,7 +189,7 @@ const handlesubmit = (e) => {
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900"></label>
         
         <div class="mt-2">
-             </div><button type="submit" onClick={()=>{$("tbody").empty(); setTotal(0);}} class="flex  justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><h2 className="text-2xl font-bold " >Delete</h2></button>
+             </div><button type="submit" class="flex  justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><h2 className="text-2xl font-bold " >Delete</h2></button>
 
       </div>
 </form>

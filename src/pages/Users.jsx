@@ -23,7 +23,7 @@ const Users= () => {
         url: form.attr("action"),
         data: form.serialize(),
         success(data) {
-          alert("");
+        
       var amount=price*qty; 
    t=total+amount;
   setTotal(t);

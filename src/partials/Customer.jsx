@@ -2,13 +2,13 @@ import React from 'react';
 import {useState} from "react";
 import {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import $ from 'jquery';
+import $, { parseJSON } from 'jquery';
 import * as jqueryExports from "jquery";
 import { useContext } from 'react';
-import { MyContext } from '../../../src/MyContext';
-
+import { MyContext } from '../../src/MyContext';
+import pics from '../images/user-36-09.jpg';
 window.$ = $;
-function SalesMenu() {
+function Customer() {
  // const navigate = useNavigate();
 const[stocks,setStocks]=useState([]);
 const[loading,setLoading]=useState(false);
@@ -31,10 +31,13 @@ function fetchstock(){
   });
   }
   useEffect(() => {
+    localStorage.setItem("current", "customer")
     setTransaction_id(Math.floor(Math.random() * 100000000));
-    localStorage.setItem("current", "sales")
+    if(login==""){history("/logins");
+   
+  }
     fetchstock();
-    if(login==""){history("/logins");}
+   
     
   },[]);
   window.$=$;
@@ -172,31 +175,30 @@ $("#tip"+$("#sref").text()).append(`<div id="tipresult">${tip.item}</div>`)
 		}	 
   const handlesubmit = (e) => {
 
-   e.preventDefault();
-    const form = $(e.target);
+    e.preventDefault();
     $.ajax({
-        type: "POST",
-        url: form.attr("action"),
-        data: form.serialize(),
-        success(data) {
-        history("/sales");
-      var amount=price*qty; 
-   t=total+amount;
-  setTotal(t);
-  
-   $(".table").append(`<tr><td>${item}</td><td>${qty}</td><td>${price}</td><td>${amount}</td><td><a href="/modifystaff/"/><img width="10%" src="../src/images/delete.jpg"/></a><br>
-
-   <a href=""><img width="10%"  src="../src/images/del.jpg"/></a></td></tr>`)  
-        },
-        error: function(xhr, textStatus, errorThrown){
-          console.log('STATUS: '+textStatus+'\nERROR THROWN: '+errorThrown);
-        }
+      type: "POST",
+      url: "http://localhost:5001/addCustomer",
+      data:JSON.stringify({ 'name': $("#client"+$("#sref").text()).val(),
+      'phone': $("#phone"+$("#sref").text()).val(),'email': $("#email"+$("#sref").text()).val(),'country': $("#country"+$("#sref").text()).val()}),
+      success: function (response) {
+        alert("")
+        $("tbody").empty();
+        $.each(response, function (key, value) { 
+     
+        
+          $("tbody").append(`<tr><td>${value["name"]}</td><td>${value["phone"]}</td>
+          <td>${value["email"]}</td><td>${value["country"]}</td><td> <button type="submit"  class="flex  justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><h2 className="text-2xl font-bold " >Remove Customer</h2></button></td></tr>`);
+                });
+                $("#client").val(""); $("#phone").val("") ; $("#email").val("") ;  $("#country").val("") ;             
+    
+      }
     });
   };
   return (
     <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
-        <h2 className="font-semibold text-slate-800 dark:text-slate-100">POS Menu</h2>
+        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Customers</h2>
       </header>
       <div className="p-3">
         {/* Table */}
@@ -206,11 +208,11 @@ $("#tip"+$("#sref").text()).append(`<div id="tipresult">${tip.item}</div>`)
 							  <thead>
 								<tr>
 									
-								  <th>Item Name</th>
-								  <th>Unit Price</th>
-								  <th>Quantity</th>
-								  <th>Amount</th>
-                  <th>Remove Item</th>
+								  <th>Customer Name</th>
+								  <th>Phone</th>
+								  <th>Email</th>
+								  <th>Country</th>
+                  <th>Remove</th>
 								</tr>
                 </thead>
                 <tbody id="salestable">
@@ -221,18 +223,13 @@ $("#tip"+$("#sref").text()).append(`<div id="tipresult">${tip.item}</div>`)
 							
 							 
 							</table>
-          <form className="form-horizontal" action="http://localhost/sale.php"
-                method="post"
+          <form className="form-horizontal" 
                 onSubmit={(event) => handlesubmit(event)}
                >
  
 <div className="form-group">        
   <br></br>   
-<div>
-  <input id="transid" value={transaction_Id} hidden/>
-  
-        <center><button type="button" onClick={addrow} class="flex  justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Item</button></center>
-      </div>     
+  <h2 className="font-semibold text-slate-800 dark:text-slate-100">Add New Customers</h2><br />
     </div>
     <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Customer Name</label>
@@ -249,17 +246,30 @@ $("#tip"+$("#sref").text()).append(`<div id="tipresult">${tip.item}</div>`)
       <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
         <div class="mt-2">
-          <input name="email"  type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input name="email" id="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>
       </div>
+      <div>
+        <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Country</label>
+        <div class="mt-2">
+          <input name="country" id="country"  type="text" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+        </div>
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Profile picture</label>
+        <div class="mt-2">
+          <input type="file" name="mypic" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+        </div>
+      </div>
+      <center> <button type="submit" onClick={entersale} class="flex  justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><h2 className="text-2xl font-bold " >Save</h2></button></center>
+   
 </form>
         </div>
       </div>
       <div class="row">    
 <div>
-<h2 className="text-3xl font-bold "  id="total">Total:{total}</h2>
-           <center> <button type="button" onClick={entersale} class="flex  justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><h2 className="text-2xl font-bold " >Save</h2></button></center>
-   
+
+          
       </div>
     </div>
     <br></br>
@@ -274,4 +284,4 @@ $("#tip"+$("#sref").text()).append(`<div id="tipresult">${tip.item}</div>`)
   );
 }
 
-export default SalesMenu;
+export default Customer;
