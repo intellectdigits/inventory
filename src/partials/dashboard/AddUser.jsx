@@ -32,7 +32,7 @@ function fetchstock(){
 setLoading(true);
   $.ajax({
     type: "GET",
-    url: "http://localhost:5001/api/users",
+    url: "https://stockapi-8hb4.onrender.com/api/users",
     data:"",
     success(response) {
      
