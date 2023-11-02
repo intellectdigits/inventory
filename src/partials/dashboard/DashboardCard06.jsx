@@ -48,7 +48,7 @@ const handlesubmit = (e) => {
    const form = $(e.target);
    $.ajax({
     type: 'POST',
-    url: "http://localhost:5001/api/insertuser",
+    url: "https://stockapi-8hb4.onrender.com/api/insertuser",
     data: JSON.stringify({username:user,password:pass}),
     contentType: "application/json; charset=utf-8",
     traditional: true,
